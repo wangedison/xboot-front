@@ -659,6 +659,7 @@ export default {
       this.formAdd = {
         type: -1,
         level: 0,
+        parentId: 0,
         sortOrder: 0,
         status: 0
       };
