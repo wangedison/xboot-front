@@ -1,43 +1,44 @@
 <template>
   <div>
     <div style="display:flex;">
-      <Input
-        v-model="currentValue"
-        @on-change="handleChange"
-        :placeholder="placeholder"
-        :size="size"
-        :disabled="disabled"
-        :readonly="readonly"
-        :maxlength="maxlength"
-        icon="md-eye"
-        style="margin-right:10px;"
-      >
-        <Poptip
-          transfer
-          trigger="hover"
-          title="图片预览"
-          placement="right"
-          width="350"
-          style="width: 17px;cursor:pointer"
-          slot="append"
+      <div style="width: 100%; margin-right:10px;">
+        <Input
+          v-model="currentValue"
+          @on-change="handleChange"
+          :placeholder="placeholder"
+          :size="size"
+          :disabled="disabled"
+          :readonly="readonly"
+          :maxlength="maxlength"
+          icon="md-eye"
         >
-          <Button type="primary" icon="md-eye"></Button>
-          <div slot="content">
-            <img
-              v-show="currentValue"
-              :src="currentValue"
-              style="width: 100%;margin: 0 auto;display: block;cursor:zoom-in"
-              @click="viewImage"
-            />
-            <span v-show="!currentValue">无效的图片链接</span>
-            <a
-              v-show="currentValue"
-              @click="viewImage"
-              style="margin-top:5px;text-align:right;display:block"
-            >查看大图</a>
-          </div>
-        </Poptip>
-      </Input>
+          <Poptip
+            transfer
+            trigger="hover"
+            title="图片预览"
+            placement="right"
+            width="350"
+            style="width: 17px;cursor:pointer"
+            slot="append"
+          >
+            <Button type="primary" icon="md-eye"></Button>
+            <div slot="content">
+              <img
+                v-show="currentValue"
+                :src="currentValue"
+                style="width: 100%;margin: 0 auto;display: block;cursor:zoom-in"
+                @click="viewImage"
+              />
+              <span v-show="!currentValue">无效的图片链接</span>
+              <a
+                v-show="currentValue"
+                @click="viewImage"
+                style="margin-top:5px;text-align:right;display:block"
+              >查看大图</a>
+            </div>
+          </Poptip>
+        </Input>
+      </div>
       <Upload
         :action="uploadFileUrl"
         :headers="accessToken"
