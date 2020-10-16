@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: xboot-front
+  namespace: nfplus-web
+  labels:
+    app: xboot-front
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: xboot-front
+  template:
+    metadata:
+      labels:
+        app: xboot-front
+    spec:
+      containers:
+        - name: xboot-front
+          image: registry-vpc.cn-shenzhen.aliyuncs.com/nfplus-dev/xboot-front:1.0-SNAPSHOT
+          imagePullPolicy: Always
+          env:
+            - name: TZ
+              value: Asia/Shanghai
+            - name: build_tag
+              value: BUILD_TAG
+          ports:
+            - containerPort: 80
+      imagePullSecrets:
+        - name: jiangch-docker-password-vpc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.beta.kubernetes.io/alicloud-loadbalancer-force-override-listeners: "true"
+    service.beta.kubernetes.io/alicloud-loadbalancer-id: lb-wz976hmsbhztfawqhxdq9
+  name: xboot-front-svc
+  namespace: nfplus-web
+spec:
+  ports:
+    - name: port
+      port: 9627
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: xboot-front
+  type: LoadBalancer
+
